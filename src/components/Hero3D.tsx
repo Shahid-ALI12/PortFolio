@@ -11,7 +11,7 @@ const Scene3D = dynamic(() => import("./Scene3D"), {
 });
 
 export default function Hero3D() {
-  const { theme } = useTheme();
+  const { theme, design } = useTheme();
 
   return (
     <Canvas3DGate
@@ -22,7 +22,7 @@ export default function Hero3D() {
         </div>
       }
     >
-      {(onScreen) => <Scene3D theme={theme} active={onScreen} />}
+      {(onScreen) => <Scene3D theme={theme} design={design} active={onScreen} />}
     </Canvas3DGate>
   );
 }
