@@ -4,7 +4,7 @@
 // ════════════════════════════════════════════════════════════════
 
 export const profile = {
-  name: "Shahid Zain",
+  name: "Shahid Ali",
   role: "Full-Stack Developer",
   // Hero ka role text inn ke beech rotate hota hai (pehla = no-JS fallback):
   roles: [
