@@ -561,6 +561,80 @@ body {
   }
 }
 
+/* ═════════════════════════════════════════
+   DESIGN TOKENS  (overall layout / look — set via [data-design])
+   Theme = colors. Design = font feel, radius, surface vibe + layout.
+   ═════════════════════════════════════════ */
+:root,
+[data-design="glass"] {
+  --d-radius: 1rem;
+  --d-card-radius: 1rem;
+  --d-heading-font: var(--font-sans);
+  --d-heading-spacing: -0.02em;
+  --d-heading-transform: none;
+  --d-section-gap: 6rem;
+}
+
+/* Bento: tighter radius, modular tiles, mono-ish headings */
+[data-design="bento"] {
+  --d-radius: 1.5rem;
+  --d-card-radius: 1.5rem;
+  --d-heading-font: var(--font-sans);
+  --d-heading-spacing: -0.03em;
+  --d-heading-transform: none;
+  --d-section-gap: 4.5rem;
+}
+
+/* Headings pick up the design's font + spacing automatically */
+h1, h2, h3 {
+  font-family: var(--d-heading-font), system-ui, sans-serif;
+  letter-spacing: var(--d-heading-spacing);
+  text-transform: var(--d-heading-transform);
+}
+
+/* Card radius follows the active design */
+.surface,
+.surface-strong {
+  border-radius: var(--d-card-radius);
+}
+
+/* ═══════════ BENTO GRID ═══════════
+   Modular grid of mixed-size tiles. Components render the markup
+   always, but these styles only "activate" under [data-design="bento"]. */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+@media (min-width: 768px) {
+  .bento-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    grid-auto-flow: dense;
+  }
+  /* First (featured) tiles span larger areas for the bento feel */
+  [data-design="bento"] .bento-grid > .bento-item:nth-child(1) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  [data-design="bento"] .bento-grid > .bento-item:nth-child(4) {
+    grid-column: span 2;
+  }
+}
+/* When NOT in bento mode, fall back to a normal even grid */
+:root:not([data-design="bento"]) .bento-grid {
+  grid-template-columns: repeat(1, 1fr);
+}
+@media (min-width: 768px) {
+  :root:not([data-design="bento"]) .bento-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  :root:not([data-design="bento"]) .bento-grid > .bento-item {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
 /* ═══════════ INTRO PRELOADER ═══════════
    First-paint intro overlay. Uses theme tokens so it matches the
    saved theme. Fades out (.preloader-hide) then unmounts in JS. */

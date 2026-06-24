@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { profile } from "@/lib/data";
 import { DEFAULT_THEME, THEME_STORAGE_KEY } from "@/lib/themes";
+import { DEFAULT_DESIGN, DESIGN_STORAGE_KEY } from "@/lib/designs";
 import Background from "@/components/Background";
 import ThemeProvider from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
@@ -23,8 +24,8 @@ export const metadata: Metadata = {
   description: profile.tagline,
 };
 
-// Runs before paint to apply the saved theme (prevents a flash of the default).
-const noFlashScript = `(function(){try{var t=localStorage.getItem('${THEME_STORAGE_KEY}')||'${DEFAULT_THEME}';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','${DEFAULT_THEME}');}})();`;
+// Runs before paint to apply the saved theme + design (prevents a flash of the defaults).
+const noFlashScript = `(function(){try{var r=document.documentElement;var t=localStorage.getItem('${THEME_STORAGE_KEY}')||'${DEFAULT_THEME}';r.setAttribute('data-theme',t);var d=localStorage.getItem('${DESIGN_STORAGE_KEY}')||'${DEFAULT_DESIGN}';r.setAttribute('data-design',d);}catch(e){document.documentElement.setAttribute('data-theme','${DEFAULT_THEME}');document.documentElement.setAttribute('data-design','${DEFAULT_DESIGN}');}})();`;
 
 export default function RootLayout({
   children,
@@ -35,6 +36,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-theme={DEFAULT_THEME}
+      data-design={DEFAULT_DESIGN}
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`}
     >
