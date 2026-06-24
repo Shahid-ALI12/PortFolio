@@ -599,40 +599,59 @@ h1, h2, h3 {
 }
 
 /* ═══════════ BENTO GRID ═══════════
-   Modular grid of mixed-size tiles. Components render the markup
-   always, but these styles only "activate" under [data-design="bento"]. */
+   Modular grid of mixed-size tiles. The markup is always present;
+   these spans only "activate" under [data-design="bento"]. */
 .bento-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+}
+@media (min-width: 640px) {
+  .bento-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* — BENTO MODE: 6-col dense grid with deliberate, varied tile sizes — */
+[data-design="bento"] .bento-grid {
+  gap: 1.1rem;
 }
 @media (min-width: 768px) {
-  .bento-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.25rem;
+  [data-design="bento"] .bento-grid {
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 11rem;
     grid-auto-flow: dense;
   }
-  /* First (featured) tiles span larger areas for the bento feel */
+  /* tile 1 — hero: big square */
   [data-design="bento"] .bento-grid > .bento-item:nth-child(1) {
+    grid-column: span 4;
+    grid-row: span 2;
+  }
+  /* tile 2 — tall */
+  [data-design="bento"] .bento-grid > .bento-item:nth-child(2) {
     grid-column: span 2;
     grid-row: span 2;
   }
+  /* tile 3 — wide */
+  [data-design="bento"] .bento-grid > .bento-item:nth-child(3) {
+    grid-column: span 3;
+    grid-row: span 2;
+  }
+  /* tile 4 — wide */
   [data-design="bento"] .bento-grid > .bento-item:nth-child(4) {
+    grid-column: span 3;
+    grid-row: span 2;
+  }
+  /* remaining — standard squares */
+  [data-design="bento"] .bento-grid > .bento-item:nth-child(n + 5) {
     grid-column: span 2;
+    grid-row: span 2;
   }
 }
-/* When NOT in bento mode, fall back to a normal even grid */
-:root:not([data-design="bento"]) .bento-grid {
-  grid-template-columns: repeat(1, 1fr);
-}
-@media (min-width: 768px) {
-  :root:not([data-design="bento"]) .bento-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  :root:not([data-design="bento"]) .bento-grid > .bento-item {
-    grid-column: auto;
-    grid-row: auto;
-  }
+/* In bento mode each tile must fill its cell so the grid reads as solid blocks */
+[data-design="bento"] .bento-grid > .bento-item,
+[data-design="bento"] .bento-grid > .bento-item > * {
+  height: 100%;
 }
 
 /* ═══════════ INTRO PRELOADER ═══════════
