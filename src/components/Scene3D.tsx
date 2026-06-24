@@ -22,7 +22,8 @@ const DESIGN_3D: Record<
 function ShapeGeometry({ kind }: { kind: ShapeKind }) {
   switch (kind) {
     case "box":
-      return <roundedShapeBox />;
+      // chunky cube with extra segments for a slightly beveled feel
+      return <boxGeometry args={[1.7, 1.7, 1.7, 4, 4, 4]} />;
     case "torusKnot":
       return <torusKnotGeometry args={[0.85, 0.28, 220, 32]} />;
     case "octa":
@@ -31,11 +32,6 @@ function ShapeGeometry({ kind }: { kind: ShapeKind }) {
     default:
       return <icosahedronGeometry args={[1.3, 1]} />;
   }
-}
-
-// A chunky cube with slightly beveled feel via higher segment count.
-function roundedShapeBox() {
-  return <boxGeometry args={[1.7, 1.7, 1.7, 4, 4, 4]} />;
 }
 
 function readAccents(): [string, string] {
