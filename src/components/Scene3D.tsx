@@ -6,27 +6,36 @@ import * as THREE from "three";
 import type { ThemeId } from "@/lib/themes";
 import type { DesignId } from "@/lib/designs";
 
-// Har design ka apna 3D "personality" — shape + kitni tezi se ghoome.
+// Har design ka apna 3D "personality" — shape + motion feel.
 type ShapeKind = "ico" | "box" | "torusKnot" | "octa";
-const DESIGN_3D: Record<DesignId, { shape: ShapeKind; speed: number; wire: number }> = {
-  glass: { shape: "ico", speed: 1, wire: 1.55 },
-  bento: { shape: "box", speed: 0.7, wire: 1.4 },
-  cyber: { shape: "torusKnot", speed: 1.8, wire: 1.7 },
-  threed: { shape: "octa", speed: 1.2, wire: 1.8 },
+const DESIGN_3D: Record<
+  DesignId,
+  { shape: ShapeKind; speed: number; wire: number; float: number }
+> = {
+  glass: { shape: "ico", speed: 1, wire: 1.5, float: 0.12 },
+  bento: { shape: "box", speed: 0.7, wire: 1.35, float: 0.08 },
+  cyber: { shape: "torusKnot", speed: 1.9, wire: 1.6, float: 0.18 },
+  threed: { shape: "octa", speed: 1.25, wire: 1.7, float: 0.22 },
 };
 
+// Higher-detail geometry so the solid + wireframe read as a crisp gem/crystal.
 function ShapeGeometry({ kind }: { kind: ShapeKind }) {
   switch (kind) {
     case "box":
-      return <boxGeometry args={[1.7, 1.7, 1.7]} />;
+      return <roundedShapeBox />;
     case "torusKnot":
-      return <torusKnotGeometry args={[0.9, 0.3, 128, 16]} />;
+      return <torusKnotGeometry args={[0.85, 0.28, 220, 32]} />;
     case "octa":
-      return <octahedronGeometry args={[1.4, 0]} />;
+      return <octahedronGeometry args={[1.45, 0]} />;
     case "ico":
     default:
-      return <icosahedronGeometry args={[1.25, 1]} />;
+      return <icosahedronGeometry args={[1.3, 1]} />;
   }
+}
+
+// A chunky cube with slightly beveled feel via higher segment count.
+function roundedShapeBox() {
+  return <boxGeometry args={[1.7, 1.7, 1.7, 4, 4, 4]} />;
 }
 
 function readAccents(): [string, string] {
@@ -51,7 +60,7 @@ function Rig({ theme, design }: { theme: ThemeId; design: DesignId }) {
 
   // Particle field built once, recolored on theme change.
   const points = useMemo(() => {
-    const count = 450;
+    const count = 900;
     const positions = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
       const r = 2.6 + Math.random() * 2;
@@ -64,10 +73,12 @@ function Rig({ theme, design }: { theme: ThemeId; design: DesignId }) {
     const geo = new THREE.BufferGeometry();
     geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
     const mat = new THREE.PointsMaterial({
-      size: 0.035,
+      size: 0.028,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.9,
       sizeAttenuation: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
     });
     return new THREE.Points(geo, mat);
   }, []);
@@ -102,12 +113,16 @@ function Rig({ theme, design }: { theme: ThemeId; design: DesignId }) {
     };
   }, [points]);
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     const d = Math.min(delta, 0.05);
     const sp = cfg.speed;
+    const t = state.clock.elapsedTime;
     if (solid.current) {
       solid.current.rotation.y += d * 0.25 * sp;
       solid.current.rotation.x += d * 0.15 * sp;
+      // gentle breathing pulse
+      const pulse = 1 + Math.sin(t * 1.5) * 0.04;
+      solid.current.scale.setScalar(pulse);
     }
     if (wire.current) {
       wire.current.rotation.y -= d * 0.18 * sp;
@@ -115,6 +130,8 @@ function Rig({ theme, design }: { theme: ThemeId; design: DesignId }) {
     }
     points.rotation.y += d * 0.04;
     if (group.current) {
+      // floating bob on Y
+      group.current.position.y = Math.sin(t * 0.9) * cfg.float;
       // ease the whole rig toward the pointer for a parallax tilt
       group.current.rotation.y +=
         (target.current.x * 0.5 - group.current.rotation.y) * 0.04;
@@ -133,9 +150,9 @@ function Rig({ theme, design }: { theme: ThemeId; design: DesignId }) {
         <ShapeGeometry kind={cfg.shape} />
         <meshStandardMaterial
           ref={solidMat}
-          roughness={0.25}
-          metalness={0.5}
-          emissiveIntensity={0.35}
+          roughness={0.15}
+          metalness={0.7}
+          emissiveIntensity={0.45}
           flatShading
         />
       </mesh>

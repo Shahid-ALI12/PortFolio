@@ -3,11 +3,16 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * One-shot IntersectionObserver hook. Returns a ref to attach and whether
- * the element has entered the viewport (stays true after first intersection).
+ * IntersectionObserver hook. Returns a ref to attach and whether the element
+ * is currently in the viewport.
+ *
+ * By default it is REPEATABLE: `inView` becomes true on enter and false on
+ * leave, so animations replay every time the element scrolls in/out (and
+ * reverse when scrolling back up). Pass `{ once: true }` for the old
+ * one-shot behaviour (stays true after the first intersection).
  */
 export function useInView<T extends Element = HTMLDivElement>(
-  options?: IntersectionObserverInit,
+  options?: IntersectionObserverInit & { once?: boolean },
 ) {
   const ref = useRef<T>(null);
   const [inView, setInView] = useState(false);
@@ -15,12 +20,19 @@ export function useInView<T extends Element = HTMLDivElement>(
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    const { once, ...ioOptions } = options ?? {};
+
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         setInView(true);
-        observer.disconnect();
+        if (once) observer.disconnect();
+      } else if (!once) {
+        // Repeatable: reset when it leaves so it can animate again on re-entry.
+        setInView(false);
       }
-    }, options);
+    }, ioOptions);
+
     observer.observe(el);
     return () => observer.disconnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps

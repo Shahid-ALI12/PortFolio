@@ -24,7 +24,11 @@ export default function CountUp({ to, suffix = "", duration = 1400 }: Props) {
   useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    if (!inView) return;
+    if (!inView) {
+      // Reset so it counts up again next time it scrolls into view.
+      if (!reduced) setN(0);
+      return;
+    }
     if (reduced) {
       setN(to);
       return;
