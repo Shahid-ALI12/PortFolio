@@ -6,6 +6,7 @@ import { DEFAULT_THEME, THEME_STORAGE_KEY } from "@/lib/themes";
 import Background from "@/components/Background";
 import ThemeProvider from "@/components/ThemeProvider";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
+import Preloader from "@/components/Preloader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,6 +45,7 @@ export default function RootLayout({
           <style>{`.reveal{opacity:1 !important;transform:none !important}`}</style>
         </noscript>
         <ThemeProvider>
+          <Preloader />
           <Background />
           {children}
           <ThemeSwitcher />

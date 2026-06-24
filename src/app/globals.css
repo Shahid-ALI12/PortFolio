@@ -560,3 +560,96 @@ body {
     max-width: 100%;
   }
 }
+
+/* ═══════════ INTRO PRELOADER ═══════════
+   First-paint intro overlay. Uses theme tokens so it matches the
+   saved theme. Fades out (.preloader-hide) then unmounts in JS. */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--page-bg);
+  opacity: 1;
+  transition: opacity 0.6s var(--ease-out-quint),
+    visibility 0.6s var(--ease-out-quint);
+}
+.preloader-hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.preloader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+}
+.preloader-name {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-size: clamp(2.25rem, 9vw, 4.5rem);
+  line-height: 1.05;
+}
+.preloader-letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.6em);
+  animation: preloader-letter-rise 0.6s var(--ease-out-quint) forwards;
+  animation-delay: calc(var(--i, 0) * 55ms);
+}
+@keyframes preloader-letter-rise {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.preloader-role {
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: preloader-fade-in 0.6s ease 0.45s forwards;
+}
+.preloader-bar {
+  margin-top: 0.5rem;
+  width: min(240px, 70vw);
+  height: 3px;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--text-faint) 35%, transparent);
+  overflow: hidden;
+  opacity: 0;
+  animation: preloader-fade-in 0.6s ease 0.55s forwards;
+}
+.preloader-bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.12s linear;
+}
+.preloader-pct {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  opacity: 0;
+  animation: preloader-fade-in 0.6s ease 0.55s forwards;
+}
+@keyframes preloader-fade-in {
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .preloader-letter,
+  .preloader-role,
+  .preloader-bar,
+  .preloader-pct {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
