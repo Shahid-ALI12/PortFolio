@@ -2,19 +2,20 @@
 
 import { useState } from "react";
 import { themes } from "@/lib/themes";
+import { designs } from "@/lib/designs";
 import { useTheme } from "./ThemeProvider";
 import { CheckIcon, CubeIcon, PaletteIcon } from "./Icons";
 
 export default function ThemeSwitcher() {
-  const { theme, setTheme, enable3D, setEnable3D } = useTheme();
+  const { theme, setTheme, design, setDesign, enable3D, setEnable3D } = useTheme();
   const [open, setOpen] = useState(false);
 
   return (
     <div className="fixed bottom-5 right-5 z-[60] flex flex-col items-end gap-3">
       {open && (
-        <div className="surface-strong w-64 rounded-2xl p-4">
+        <div className="surface-strong max-h-[80vh] w-64 overflow-y-auto rounded-2xl p-4">
           <p className="t-faint mb-3 font-mono text-xs uppercase tracking-widest">
-            Choose a design
+            Color theme
           </p>
 
           <div className="grid grid-cols-2 gap-2">
@@ -35,6 +36,32 @@ export default function ThemeSwitcher() {
                     }}
                   />
                   <span className="t-base text-sm font-medium">{t.label}</span>
+                  {active && (
+                    <span className="t-accent absolute right-2 top-2">
+                      <CheckIcon className="h-3.5 w-3.5" />
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          <p className="t-faint mb-2 mt-4 font-mono text-xs uppercase tracking-widest">
+            Layout
+          </p>
+          <div className="flex flex-col gap-2">
+            {designs.map((d) => {
+              const active = design === d.id;
+              return (
+                <button
+                  key={d.id}
+                  onClick={() => setDesign(d.id)}
+                  className="surface relative flex flex-col rounded-xl px-3 py-2 text-left"
+                  style={active ? { borderColor: "var(--accent)" } : undefined}
+                  aria-pressed={active}
+                >
+                  <span className="t-base text-sm font-medium">{d.label}</span>
+                  <span className="t-faint text-xs">{d.desc}</span>
                   {active && (
                     <span className="t-accent absolute right-2 top-2">
                       <CheckIcon className="h-3.5 w-3.5" />

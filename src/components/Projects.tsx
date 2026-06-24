@@ -10,9 +10,9 @@ export default function Projects() {
       <div className="mx-auto max-w-6xl px-6 py-24">
         <SectionHeading eyebrow="03 — Projects" title="Things I've built" />
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="bento-grid">
           {projects.map((project, i) => (
-            <Reveal key={project.title} from="scale" delay={(i % 3) * 100}>
+            <Reveal key={project.title} from="scale" delay={(i % 3) * 100} className="bento-item">
               <TiltCard>
                 <article className="surface surface-hover card-shine group flex h-full flex-col overflow-hidden rounded-2xl">
                   <div
