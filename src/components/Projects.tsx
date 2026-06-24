@@ -1,6 +1,7 @@
 import { projects } from "@/lib/data";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
+import TiltCard from "./TiltCard";
 import { CodeIcon, ExternalLinkIcon, GithubIcon } from "./Icons";
 
 export default function Projects() {
@@ -11,59 +12,70 @@ export default function Projects() {
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, i) => (
-            <Reveal key={project.title} delay={(i % 3) * 100}>
-              <article className="glass glass-hover group flex h-full flex-col overflow-hidden rounded-2xl hover:-translate-y-1">
-                <div className="relative flex h-40 items-center justify-center overflow-hidden bg-gradient-to-br from-cyan-500/10 via-violet-500/10 to-transparent">
-                  <div className="bg-grid absolute inset-0 opacity-40" />
-                  <CodeIcon className="relative h-10 w-10 text-cyan-300/70" />
-                  {project.featured && (
-                    <span className="absolute right-3 top-3 rounded-full bg-cyan-400/15 px-2 py-0.5 text-xs font-medium text-cyan-300">
-                      Featured
-                    </span>
-                  )}
-                </div>
-
-                <div className="flex flex-1 flex-col p-6">
-                  <h3 className="text-lg font-semibold text-white">
-                    {project.title}
-                  </h3>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-zinc-400">
-                    {project.description}
-                  </p>
-
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-md bg-white/5 px-2 py-1 text-xs text-zinc-400"
-                      >
-                        {tag}
+            <Reveal key={project.title} from="scale" delay={(i % 3) * 100}>
+              <TiltCard>
+                <article className="surface surface-hover card-shine group flex h-full flex-col overflow-hidden rounded-2xl">
+                  <div
+                    className="relative flex h-40 items-center justify-center overflow-hidden"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, color-mix(in srgb, var(--accent) 18%, transparent), color-mix(in srgb, var(--accent-2) 14%, transparent))",
+                    }}
+                  >
+                    <div className="bg-grid absolute inset-0 opacity-60" />
+                    <CodeIcon className="t-accent relative h-10 w-10" />
+                    {project.featured && (
+                      <span className="accent-soft absolute right-3 top-3 rounded-full px-2 py-0.5 text-xs font-medium">
+                        Featured
                       </span>
-                    ))}
+                    )}
                   </div>
 
-                  <div className="mt-5 flex items-center gap-4 border-t border-white/5 pt-4">
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-sm font-medium text-cyan-300 transition hover:text-cyan-200"
+                  <div className="flex flex-1 flex-col p-6">
+                    <h3 className="t-base text-lg font-semibold">
+                      {project.title}
+                    </h3>
+                    <p className="t-muted mt-2 flex-1 text-sm leading-relaxed">
+                      {project.description}
+                    </p>
+
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="chip rounded-md px-2 py-1 text-xs"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div
+                      className="mt-5 flex items-center gap-4 border-t pt-4"
+                      style={{ borderColor: "var(--chip-border)" }}
                     >
-                      <ExternalLinkIcon className="h-4 w-4" />
-                      Live
-                    </a>
-                    <a
-                      href={project.repoUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-300 transition hover:text-white"
-                    >
-                      <GithubIcon className="h-4 w-4" />
-                      Code
-                    </a>
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="t-accent inline-flex items-center gap-1.5 text-sm font-medium"
+                      >
+                        <ExternalLinkIcon className="h-4 w-4" />
+                        Live
+                      </a>
+                      <a
+                        href={project.repoUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="link inline-flex items-center gap-1.5 text-sm font-medium"
+                      >
+                        <GithubIcon className="h-4 w-4" />
+                        Code
+                      </a>
+                    </div>
                   </div>
-                </div>
-              </article>
+                </article>
+              </TiltCard>
             </Reveal>
           ))}
         </div>

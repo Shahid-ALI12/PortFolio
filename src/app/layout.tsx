@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { profile } from "@/lib/data";
+import { DEFAULT_THEME, THEME_STORAGE_KEY } from "@/lib/themes";
 import Background from "@/components/Background";
+import ThemeProvider from "@/components/ThemeProvider";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,6 +22,9 @@ export const metadata: Metadata = {
   description: profile.tagline,
 };
 
+// Runs before paint to apply the saved theme (prevents a flash of the default).
+const noFlashScript = `(function(){try{var t=localStorage.getItem('${THEME_STORAGE_KEY}')||'${DEFAULT_THEME}';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','${DEFAULT_THEME}');}})();`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -27,11 +33,21 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-theme={DEFAULT_THEME}
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`}
     >
-      <body className="min-h-screen antialiased selection:bg-cyan-400 selection:text-black">
-        <Background />
-        {children}
+      <body className="min-h-screen antialiased">
+        <script dangerouslySetInnerHTML={{ __html: noFlashScript }} />
+        {/* If JS is unavailable, scroll-reveal content must still be visible. */}
+        <noscript>
+          <style>{`.reveal{opacity:1 !important;transform:none !important}`}</style>
+        </noscript>
+        <ThemeProvider>
+          <Background />
+          {children}
+          <ThemeSwitcher />
+        </ThemeProvider>
       </body>
     </html>
   );

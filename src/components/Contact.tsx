@@ -1,39 +1,45 @@
 import { profile } from "@/lib/data";
 import Reveal from "./Reveal";
+import Magnetic from "./Magnetic";
+import ContactBackdrop from "./ContactBackdrop";
 import { GithubIcon, LinkedinIcon, MailIcon, TwitterIcon } from "./Icons";
 
 export default function Contact() {
   return (
-    <section id="contact" className="scroll-mt-20">
-      <div className="mx-auto max-w-3xl px-6 py-24">
+    <section id="contact" className="relative scroll-mt-20 overflow-hidden">
+      <ContactBackdrop />
+
+      <div className="relative z-10 mx-auto max-w-3xl px-6 py-24">
         <Reveal>
-          <div className="glass-strong rounded-3xl p-8 text-center sm:p-12">
-            <p className="mb-2 font-mono text-sm uppercase tracking-widest text-cyan-400">
+          <div className="surface-strong rounded-3xl p-8 text-center sm:p-12">
+            <p className="t-accent mb-2 font-mono text-sm uppercase tracking-widest">
               04 — Contact
             </p>
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            <h2 className="t-base text-3xl font-bold tracking-tight sm:text-4xl">
               Let&apos;s build something together
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-zinc-300">
+            <p className="t-muted mx-auto mt-4 max-w-xl">
               Have a project in mind, or just want to say hi? My inbox is always
               open — I&apos;ll get back to you as soon as I can.
             </p>
 
-            <a
-              href={`mailto:${profile.email}`}
-              className="mt-8 inline-flex items-center gap-2 rounded-full bg-cyan-400 px-7 py-3.5 font-semibold text-black transition hover:bg-cyan-300"
-            >
-              <MailIcon className="h-5 w-5" />
-              {profile.email}
-            </a>
+            <Magnetic className="mt-8">
+              <a
+                href={`mailto:${profile.email}`}
+                className="btn-accent inline-flex items-center gap-2 rounded-full px-7 py-3.5 font-semibold"
+              >
+                <MailIcon className="h-5 w-5" />
+                {profile.email}
+              </a>
+            </Magnetic>
 
-            <div className="mt-10 flex items-center justify-center gap-3 text-zinc-300">
+            <div className="mt-10 flex items-center justify-center gap-3">
               <a
                 href={profile.socials.github}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="GitHub"
-                className="glass glass-hover flex h-11 w-11 items-center justify-center rounded-full hover:text-white"
+                className="surface surface-hover link flex h-11 w-11 items-center justify-center rounded-full"
               >
                 <GithubIcon className="h-5 w-5" />
               </a>
@@ -42,7 +48,7 @@ export default function Contact() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="LinkedIn"
-                className="glass glass-hover flex h-11 w-11 items-center justify-center rounded-full hover:text-white"
+                className="surface surface-hover link flex h-11 w-11 items-center justify-center rounded-full"
               >
                 <LinkedinIcon className="h-5 w-5" />
               </a>
@@ -51,7 +57,7 @@ export default function Contact() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Twitter / X"
-                className="glass glass-hover flex h-11 w-11 items-center justify-center rounded-full hover:text-white"
+                className="surface surface-hover link flex h-11 w-11 items-center justify-center rounded-full"
               >
                 <TwitterIcon className="h-5 w-5" />
               </a>

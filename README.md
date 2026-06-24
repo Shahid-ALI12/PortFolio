@@ -26,31 +26,39 @@ Save karte hi browser khud reload ho jayega (hot reload).
 
 ## 🖼️ Apni photo add karna
 
+Avatar ke ird-gird **animated Aurora Halo** (rotating ring + breathing glow + orbiting dots) hai. Apni photo daalna ek-line ka kaam hai:
+
 1. Apni image `public/` folder mein daalo (e.g. `public/me.jpg`)
-2. [`src/components/About.tsx`](src/components/About.tsx) mein initials wale `<div>` ki jagah:
+2. [`src/components/About.tsx`](src/components/About.tsx) mein `AuroraHalo` ko `src` do:
 
 ```tsx
-import Image from "next/image";
-
-<Image src="/me.jpg" alt="Shahid Zain" width={256} height={256}
-  className="aspect-square w-64 rounded-3xl object-cover" />
+<AuroraHalo initials={initials} src="/me.jpg" />
 ```
 
-## 🎨 Theme / colors
+Halo + animation sab as-is rahenge — bas initials ki jagah aapki photo aa jayegi (square crop, [`AvatarInner`](src/components/about/AvatarInner.tsx) handle karta hai).
 
-- Global styles + animations: [`src/app/globals.css`](src/app/globals.css)
-- Accent color har jagah `cyan` + `violet` hai. Replace-all karke koi aur Tailwind color (e.g. `emerald`, `rose`) use kar sakte ho.
+## 🎨 Themes (4 designs) + 3D
 
-### Glassmorphism
+Site pe **4 design styles** hain, ek floating switcher (neeche-right palette button 🎨) se live change hote hain aur choice `localStorage` mein save hoti hai:
 
-UI frosted-glass style pe hai. Reusable classes (globals.css mein):
+| Theme | Style |
+|---|---|
+| **Glass** | Frosted glassmorphism (default) |
+| **Neon** | Cyberpunk / neon glow |
+| **Aurora** | Vibrant teal–purple gradients |
+| **Light** | Clean neumorphism (light) |
 
-- `glass` — standard frosted panel (translucent bg + blur + border)
-- `glass-strong` — zyada opaque (navbar / focal cards ke liye)
-- `glass-hover` — `glass` ke saath lagao to hover pe react kare
+### Kaise kaam karta hai
 
-Kisi bhi element ko glass banane ke liye: `className="glass rounded-2xl p-6"`.
-Colors peeche [`src/components/Background.tsx`](src/components/Background.tsx) ke colorful orbs se aate hain — un orbs ke color/position badal kar poora mood change kar sakte ho.
+- Har theme sirf CSS **tokens** set karti hai — [`src/app/globals.css`](src/app/globals.css) mein `[data-theme="..."]` blocks. Components in tokens ko use karte hain (hardcoded color nahi), isliye `data-theme` badalte hi poora look badal jata hai.
+- **Naya theme add karna:** globals.css mein ek naya `[data-theme="mytheme"]` block banao (tokens copy karke values change karo), phir [`src/lib/themes.ts`](src/lib/themes.ts) ki list mein entry add karo.
+- **Reusable token classes:** `surface` / `surface-strong` (panels), `surface-hover`, `text-gradient`, `btn-accent`, `accent-soft`, `chip`, `t-base` / `t-muted` / `t-faint`, `bg-accent-gradient`.
+
+### 3D
+
+- **Hero WebGL scene:** [`src/components/Scene3D.tsx`](src/components/Scene3D.tsx) — React Three Fiber se rotating icosahedron + wireframe + particle field, mouse pe tilt karta hai, har theme ke accent colors pick karta hai.
+- **Card tilt:** [`src/components/TiltCard.tsx`](src/components/TiltCard.tsx) — CSS 3D, cursor ke saath cards tilt hote hain.
+- Switcher ke **"3D effects" toggle** se off ho jata hai (mobile / reduced-motion pe auto-light fallback).
 
 ## 🚀 Deploy (free)
 

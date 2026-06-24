@@ -6,6 +6,13 @@
 export const profile = {
   name: "Shahid Zain",
   role: "Full-Stack Developer",
+  // Hero ka role text inn ke beech rotate hota hai (pehla = no-JS fallback):
+  roles: [
+    "Full-Stack Developer",
+    "React & Next.js Engineer",
+    "UI / UX Enthusiast",
+    "Problem Solver",
+  ],
   // Hero section ki badi tagline:
   tagline:
     "I design and build fast, accessible web applications — from idea to deployment.",

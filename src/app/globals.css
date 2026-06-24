@@ -1,25 +1,275 @@
 @import "tailwindcss";
 
-:root {
-  --background: #070710;
-  --foreground: #e4e4e7;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
+/* ════════════════════════════════════════════════════════════
+   THEME TOKENS
+   Har theme sirf yeh variables set karti hai — components inhi
+   tokens ko use karte hain, isliye theme switch karte hi poora
+   look badal jata hai. Default = Glass.
+   ════════════════════════════════════════════════════════════ */
+
+:root,
+[data-theme="glass"] {
+  --page-bg: #070710;
+  --text: #e9e9f2;
+  --text-muted: #b7b7c6;
+  --text-faint: #84848f;
+
+  --accent: #22d3ee;
+  --accent-2: #a78bfa;
+  --accent-contrast: #05050c;
+
+  --surface-bg: rgba(255, 255, 255, 0.055);
+  --surface-border: rgba(255, 255, 255, 0.12);
+  --surface-strong-bg: rgba(255, 255, 255, 0.08);
+  --surface-strong-border: rgba(255, 255, 255, 0.16);
+  --surface-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --surface-blur: 16px;
+
+  --chip-bg: rgba(255, 255, 255, 0.05);
+  --chip-border: rgba(255, 255, 255, 0.1);
+
+  --grid-color: rgba(255, 255, 255, 0.06);
+  --orb-1: rgba(34, 211, 238, 0.3);
+  --orb-2: rgba(139, 92, 246, 0.3);
+  --orb-3: rgba(217, 70, 239, 0.2);
+  --orb-4: rgba(37, 99, 235, 0.25);
+  --orb-blur: 120px;
+
+  --heading-glow: none;
+  color-scheme: dark;
+}
+
+[data-theme="neon"] {
+  --page-bg: #05060c;
+  --text: #eafdff;
+  --text-muted: #9fc0d4;
+  --text-faint: #5f7d92;
+
+  --accent: #00f0ff;
+  --accent-2: #ff2bd6;
+  --accent-contrast: #03040a;
+
+  --surface-bg: rgba(10, 16, 30, 0.5);
+  --surface-border: rgba(0, 240, 255, 0.35);
+  --surface-strong-bg: rgba(10, 16, 30, 0.7);
+  --surface-strong-border: rgba(0, 240, 255, 0.5);
+  --surface-shadow: 0 0 24px rgba(0, 240, 255, 0.12), inset 0 1px 0 rgba(0, 240, 255, 0.12);
+  --surface-blur: 8px;
+
+  --chip-bg: rgba(0, 240, 255, 0.08);
+  --chip-border: rgba(0, 240, 255, 0.32);
+
+  --grid-color: rgba(0, 240, 255, 0.09);
+  --orb-1: rgba(0, 240, 255, 0.26);
+  --orb-2: rgba(255, 43, 214, 0.22);
+  --orb-3: rgba(123, 0, 255, 0.2);
+  --orb-4: rgba(0, 255, 170, 0.16);
+  --orb-blur: 110px;
+
+  --heading-glow: 0 0 24px rgba(0, 240, 255, 0.45);
+  color-scheme: dark;
+}
+
+[data-theme="aurora"] {
+  --page-bg: #0a0714;
+  --text: #f3edff;
+  --text-muted: #c7bce0;
+  --text-faint: #8a7fa6;
+
+  --accent: #2dd4bf;
+  --accent-2: #c084fc;
+  --accent-contrast: #04040a;
+
+  --surface-bg: linear-gradient(135deg, rgba(45, 212, 191, 0.12), rgba(192, 132, 252, 0.1));
+  --surface-border: rgba(255, 255, 255, 0.14);
+  --surface-strong-bg: linear-gradient(135deg, rgba(45, 212, 191, 0.18), rgba(192, 132, 252, 0.16));
+  --surface-strong-border: rgba(255, 255, 255, 0.2);
+  --surface-shadow: 0 10px 40px rgba(45, 212, 191, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --surface-blur: 18px;
+
+  --chip-bg: rgba(255, 255, 255, 0.07);
+  --chip-border: rgba(255, 255, 255, 0.14);
+
+  --grid-color: rgba(255, 255, 255, 0.05);
+  --orb-1: rgba(45, 212, 191, 0.32);
+  --orb-2: rgba(192, 132, 252, 0.32);
+  --orb-3: rgba(244, 114, 182, 0.24);
+  --orb-4: rgba(99, 102, 241, 0.26);
+  --orb-blur: 130px;
+
+  --heading-glow: none;
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --page-bg: #eef1f6;
+  --text: #1a1c22;
+  --text-muted: #4b5563;
+  --text-faint: #5b6472;
+
+  --accent: #0e7490;
+  --accent-2: #7c3aed;
+  --accent-contrast: #ffffff;
+
+  /* Neumorphism: surface == page bg, no border, soft dual shadow */
+  --surface-bg: #eef1f6;
+  --surface-border: transparent;
+  --surface-strong-bg: #f3f6fb;
+  --surface-strong-border: transparent;
+  --surface-shadow: 6px 6px 14px rgba(174, 179, 191, 0.6), -6px -6px 14px rgba(255, 255, 255, 0.95);
+  --surface-blur: 0px;
+
+  --chip-bg: #eef1f6;
+  --chip-border: rgba(0, 0, 0, 0.06);
+
+  --grid-color: rgba(0, 0, 0, 0.04);
+  --orb-1: rgba(8, 145, 178, 0.12);
+  --orb-2: rgba(124, 58, 237, 0.12);
+  --orb-3: rgba(236, 72, 153, 0.08);
+  --orb-4: rgba(14, 165, 233, 0.1);
+  --orb-blur: 130px;
+
+  --heading-glow: none;
+  color-scheme: light;
+}
+
+/* ════════════════════════════════════════════════════════════
+   BASE
+   ════════════════════════════════════════════════════════════ */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+body {
+  background: var(--page-bg);
+  color: var(--text);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* ════════════════════════════════════════════════════════════
+   SURFACES (token-driven; theme decides glass / neon / neumorphic)
+   ════════════════════════════════════════════════════════════ */
+
+.surface {
+  background: var(--surface-bg);
+  border: 1px solid var(--surface-border);
+  box-shadow: var(--surface-shadow);
+  -webkit-backdrop-filter: blur(var(--surface-blur));
+  backdrop-filter: blur(var(--surface-blur));
+}
+
+.surface-strong {
+  background: var(--surface-strong-bg);
+  border: 1px solid var(--surface-strong-border);
+  box-shadow: var(--surface-shadow);
+  -webkit-backdrop-filter: blur(calc(var(--surface-blur) + 4px));
+  backdrop-filter: blur(calc(var(--surface-blur) + 4px));
+}
+
+.surface-hover {
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.surface-hover:hover {
+  border-color: var(--accent);
+}
+
+/* ════════════════════════════════════════════════════════════
+   TEXT + ACCENT UTILITIES
+   ════════════════════════════════════════════════════════════ */
+
+.t-base {
+  color: var(--text);
+}
+.t-muted {
+  color: var(--text-muted);
+}
+.t-faint {
+  color: var(--text-faint);
+}
+.t-accent {
+  color: var(--accent);
+}
+
+.text-gradient {
+  background-image: linear-gradient(to right, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-accent-gradient {
+  background-image: linear-gradient(to right, var(--accent), var(--accent-2));
+}
+
+.heading-glow {
+  text-shadow: var(--heading-glow);
+}
+
+.chip {
+  background: var(--chip-bg);
+  border: 1px solid var(--chip-border);
+  color: var(--text-muted);
+}
+
+.link {
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+}
+.link:hover {
+  color: var(--text);
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  transition: filter 0.25s ease, transform 0.25s ease;
+}
+.btn-accent:hover {
+  filter: brightness(1.1);
+}
+
+.accent-soft {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  color: var(--accent);
+  transition: background 0.25s ease;
+}
+.accent-soft:hover {
+  background: color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+/* ════════════════════════════════════════════════════════════
+   3D TILT (CSS perspective; rotation set via inline style from JS)
+   ════════════════════════════════════════════════════════════ */
+
+.tilt {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
+  will-change: transform;
+}
+.tilt-pop {
+  transform: translateZ(40px);
+  transform-style: preserve-3d;
+}
+
+/* ════════════════════════════════════════════════════════════
+   DECOR + ANIMATIONS
+   ════════════════════════════════════════════════════════════ */
+
+.bg-grid {
+  background-image: radial-gradient(circle, var(--grid-color) 1px, transparent 1px);
+  background-size: 28px 28px;
 }
 
 @keyframes blob {
@@ -34,84 +284,279 @@
     transform: translate(-20px, 20px) scale(0.95);
   }
 }
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
 .animate-blob {
   animation: blob 18s ease-in-out infinite;
 }
 
-/* Subtle dotted grid used behind the hero */
-.bg-grid {
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
-  background-size: 28px 28px;
-}
-
-/* Glassmorphism */
-.glass {
-  background-color: rgba(255, 255, 255, 0.055);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
-  backdrop-filter: blur(16px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-
-/* Stronger, more opaque glass for nav / focal panels */
-.glass-strong {
-  background-color: rgba(255, 255, 255, 0.07);
-  -webkit-backdrop-filter: blur(22px) saturate(170%);
-  backdrop-filter: blur(22px) saturate(170%);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-/* Add to a .glass element to make it react on hover */
-.glass-hover {
-  transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease,
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
-.glass-hover:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.22);
-}
+/* ════════════════════════════════════════════════════════════
+   SCROLLBAR + SELECTION
+   ════════════════════════════════════════════════════════════ */
 
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #08080c;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
+  background: color-mix(in srgb, var(--accent) 55%, transparent);
 }
 
 ::selection {
-  background: #22d3ee;
-  color: #08080c;
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+/* ═══════════ MOTION FOUNDATION ═══════════ */
+:root {
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur: 600ms;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-blob {
+    animation: none;
+  }
+}
+
+/* ═══════════ AVATAR — AURORA CONIC HALO ═══════════ */
+@property --halo-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.halo-frame {
+  isolation: isolate;
+}
+.halo-ring {
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  z-index: 0;
+  background: conic-gradient(
+    from var(--halo-angle),
+    var(--accent),
+    var(--accent-2),
+    color-mix(in srgb, var(--accent) 50%, var(--accent-2)),
+    var(--accent)
+  );
+  animation: halo-spin 7s linear infinite;
+}
+.halo-aura {
+  position: absolute;
+  inset: -14px;
+  border-radius: 2rem;
+  z-index: -1;
+  background: conic-gradient(
+    from var(--halo-angle),
+    var(--accent),
+    var(--accent-2),
+    var(--accent)
+  );
+  filter: blur(26px);
+  opacity: 0.55;
+  animation: halo-spin 7s linear infinite, halo-breathe 5s ease-in-out infinite;
+}
+@keyframes halo-spin {
+  to {
+    --halo-angle: 360deg;
+  }
+}
+@keyframes halo-breathe {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.97);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.03);
+  }
+}
+[data-theme="light"] .halo-aura {
+  opacity: 0.3;
+  filter: blur(20px);
+}
+/* orbiting satellite dots */
+@keyframes orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.halo-orbit {
+  position: absolute;
+  inset: -7px;
+  z-index: 20;
+  pointer-events: none;
+  animation: orbit 14s linear infinite;
+}
+.halo-orbit.reverse {
+  inset: -1px;
+  animation: orbit 9s linear infinite reverse;
+}
+.halo-orbit > i {
+  position: absolute;
+  left: 50%;
+  top: -5px;
+  height: 10px;
+  width: 10px;
+  margin-left: -5px;
+  border-radius: 9999px;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+}
+.halo-orbit > i.alt {
+  top: auto;
+  bottom: -5px;
+  height: 7px;
+  width: 7px;
+  margin-left: -3.5px;
+  background: var(--accent-2);
+  box-shadow: 0 0 10px var(--accent-2);
+}
+/* pause the (always-on) halo animations when scrolled off-screen */
+.halo-frame.paused .halo-ring,
+.halo-frame.paused .halo-aura,
+.halo-frame.paused .halo-orbit {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .halo-ring,
+  .halo-aura,
+  .halo-orbit {
+    animation: none;
+  }
+  .halo-aura {
+    opacity: 0.45;
+    transform: none;
+  }
+}
+
+/* ═══════════ HERO ENTRANCE STAGGER ═══════════ */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.hero-rise > * {
+  opacity: 0;
+  animation: rise 0.7s var(--ease-out-quint) forwards;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-rise > * {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* ═══════════ CARD SHINE SWEEP ═══════════ */
+.card-shine {
+  position: relative;
+  overflow: hidden;
+}
+.card-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    color-mix(in srgb, var(--accent) 22%, transparent) 48%,
+    transparent 66%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.7s ease;
+}
+.card-shine:hover::after {
+  transform: translateX(120%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-shine::after {
+    display: none;
+  }
+}
+
+/* ═══════════ SECTION-NUMBER WATERMARK ═══════════ */
+.section-watermark {
+  position: absolute;
+  left: 50%;
+  top: -2.5rem;
+  transform: translateX(-50%);
+  font-family: var(--font-mono), monospace;
+  font-weight: 800;
+  font-size: clamp(5rem, 16vw, 11rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  -webkit-text-stroke: 1px var(--text-faint);
+  color: transparent;
+  opacity: 0.05;
+}
+
+/* ═══════════ SKILLS MARQUEE ═══════════ */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: auto;
+    max-width: 100%;
+  }
 }
