@@ -585,6 +585,16 @@ body {
   --d-section-gap: 4.5rem;
 }
 
+/* Cyber: sharp corners, mono headings, uppercase, HUD vibe */
+[data-design="cyber"] {
+  --d-radius: 0.25rem;
+  --d-card-radius: 0.25rem;
+  --d-heading-font: var(--font-mono);
+  --d-heading-spacing: 0.04em;
+  --d-heading-transform: uppercase;
+  --d-section-gap: 5rem;
+}
+
 /* Headings pick up the design's font + spacing automatically */
 h1, h2, h3 {
   font-family: var(--d-heading-font), system-ui, sans-serif;
@@ -652,6 +662,104 @@ h1, h2, h3 {
 [data-design="bento"] .bento-grid > .bento-item,
 [data-design="bento"] .bento-grid > .bento-item > * {
   height: 100%;
+}
+
+/* ═══════════ DARK FUTURISTIC / CYBER ═══════════
+   HUD-style surfaces: clipped corners, neon edges, scanline texture.
+   Activates only under [data-design="cyber"] (tokens still drive colors). */
+[data-design="cyber"] .surface,
+[data-design="cyber"] .surface-strong {
+  position: relative;
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  background: color-mix(in srgb, var(--page-bg) 70%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent) 12%, transparent),
+    0 0 22px color-mix(in srgb, var(--accent) 14%, transparent),
+    inset 0 0 22px color-mix(in srgb, var(--accent) 6%, transparent);
+  /* clipped / beveled HUD corners */
+  clip-path: polygon(
+    14px 0,
+    100% 0,
+    100% calc(100% - 14px),
+    calc(100% - 14px) 100%,
+    0 100%,
+    0 14px
+  );
+}
+/* corner accent ticks */
+[data-design="cyber"] .surface::before,
+[data-design="cyber"] .surface-strong::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 12px;
+  height: 12px;
+  border-top: 2px solid var(--accent);
+  border-left: 2px solid var(--accent);
+  opacity: 0.8;
+  pointer-events: none;
+}
+[data-design="cyber"] .surface-hover:hover {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent) 25%, transparent),
+    0 0 34px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* glowing headings + accent eyebrows in cyber mode */
+[data-design="cyber"] h1,
+[data-design="cyber"] h2 {
+  text-shadow: 0 0 18px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+/* faint moving scanlines over the whole page (under content) */
+[data-design="cyber"] body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--accent) 5%, transparent) 0px,
+    color-mix(in srgb, var(--accent) 5%, transparent) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  opacity: 0.35;
+  animation: cyber-scan 8s linear infinite;
+}
+@keyframes cyber-scan {
+  from {
+    background-position-y: 0;
+  }
+  to {
+    background-position-y: 120px;
+  }
+}
+[data-design="cyber"] .chip {
+  border-radius: 0.25rem;
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.7rem;
+}
+[data-design="cyber"] .btn-accent {
+  border-radius: 0.25rem;
+  clip-path: polygon(
+    10px 0,
+    100% 0,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    0 100%,
+    0 10px
+  );
+  box-shadow: 0 0 22px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-design="cyber"] body::after {
+    animation: none;
+  }
 }
 
 /* ═══════════ INTRO PRELOADER ═══════════
