@@ -4,6 +4,30 @@ import { useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import type { ThemeId } from "@/lib/themes";
+import type { DesignId } from "@/lib/designs";
+
+// Har design ka apna 3D "personality" — shape + kitni tezi se ghoome.
+type ShapeKind = "ico" | "box" | "torusKnot" | "octa";
+const DESIGN_3D: Record<DesignId, { shape: ShapeKind; speed: number; wire: number }> = {
+  glass: { shape: "ico", speed: 1, wire: 1.55 },
+  bento: { shape: "box", speed: 0.7, wire: 1.4 },
+  cyber: { shape: "torusKnot", speed: 1.8, wire: 1.7 },
+  threed: { shape: "octa", speed: 1.2, wire: 1.8 },
+};
+
+function ShapeGeometry({ kind }: { kind: ShapeKind }) {
+  switch (kind) {
+    case "box":
+      return <boxGeometry args={[1.7, 1.7, 1.7]} />;
+    case "torusKnot":
+      return <torusKnotGeometry args={[0.9, 0.3, 128, 16]} />;
+    case "octa":
+      return <octahedronGeometry args={[1.4, 0]} />;
+    case "ico":
+    default:
+      return <icosahedronGeometry args={[1.25, 1]} />;
+  }
+}
 
 function readAccents(): [string, string] {
   if (typeof window === "undefined") return ["#22d3ee", "#a78bfa"];
@@ -13,7 +37,8 @@ function readAccents(): [string, string] {
   return [a, b];
 }
 
-function Rig({ theme }: { theme: ThemeId }) {
+function Rig({ theme, design }: { theme: ThemeId; design: DesignId }) {
+  const cfg = DESIGN_3D[design] ?? DESIGN_3D.glass;
   const group = useRef<THREE.Group>(null);
   const solid = useRef<THREE.Mesh>(null);
   const wire = useRef<THREE.Mesh>(null);
@@ -79,13 +104,14 @@ function Rig({ theme }: { theme: ThemeId }) {
 
   useFrame((_, delta) => {
     const d = Math.min(delta, 0.05);
+    const sp = cfg.speed;
     if (solid.current) {
-      solid.current.rotation.y += d * 0.25;
-      solid.current.rotation.x += d * 0.15;
+      solid.current.rotation.y += d * 0.25 * sp;
+      solid.current.rotation.x += d * 0.15 * sp;
     }
     if (wire.current) {
-      wire.current.rotation.y -= d * 0.18;
-      wire.current.rotation.z += d * 0.1;
+      wire.current.rotation.y -= d * 0.18 * sp;
+      wire.current.rotation.z += d * 0.1 * sp;
     }
     points.rotation.y += d * 0.04;
     if (group.current) {
@@ -104,7 +130,7 @@ function Rig({ theme }: { theme: ThemeId }) {
       <pointLight ref={lightB} position={[-4, -2, 3]} intensity={45} distance={20} />
 
       <mesh ref={solid}>
-        <icosahedronGeometry args={[1.25, 1]} />
+        <ShapeGeometry kind={cfg.shape} />
         <meshStandardMaterial
           ref={solidMat}
           roughness={0.25}
@@ -114,8 +140,8 @@ function Rig({ theme }: { theme: ThemeId }) {
         />
       </mesh>
 
-      <mesh ref={wire} scale={1.55}>
-        <icosahedronGeometry args={[1.25, 1]} />
+      <mesh ref={wire} scale={cfg.wire}>
+        <ShapeGeometry kind={cfg.shape} />
         <meshBasicMaterial ref={wireMat} wireframe transparent opacity={0.4} />
       </mesh>
 
@@ -126,9 +152,11 @@ function Rig({ theme }: { theme: ThemeId }) {
 
 export default function Scene3D({
   theme,
+  design,
   active = true,
 }: {
   theme: ThemeId;
+  design: DesignId;
   active?: boolean;
 }) {
   return (
@@ -139,7 +167,7 @@ export default function Scene3D({
       frameloop={active ? "always" : "never"}
       style={{ background: "transparent" }}
     >
-      <Rig theme={theme} />
+      <Rig theme={theme} design={design} />
     </Canvas>
   );
 }
