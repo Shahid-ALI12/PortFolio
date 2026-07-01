@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#06070d" />
+    <meta
+      name="description"
+      content="Zubair — Full-Stack Developer building fast, immersive web experiences with React, Node.js and a love for detail."
+    />
+    <meta property="og:title" content="Zubair — Full-Stack Developer" />
+    <meta
+      property="og:description"
+      content="Full-Stack Developer crafting fast, delightful web experiences."
+    />
+    <meta property="og:type" content="website" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Zubair — Full-Stack Developer</title>
+
+    <!-- No-flash: apply saved theme/design before first paint -->
+    <script>
+      (function () {
+        try {
+          var el = document.documentElement
+          el.setAttribute('data-theme', localStorage.getItem('zubair.theme') || 'neon')
+          el.setAttribute('data-design', localStorage.getItem('zubair.design') || 'soft')
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'neon')
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
