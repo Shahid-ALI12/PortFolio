@@ -463,13 +463,14 @@ main {
   top: 18px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 150;
-  width: min(var(--container), calc(100% - 32px));
+  z-index: 999;
+  width: min(var(--container), calc(100vw - 32px));
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px 12px 10px 20px;
   border-radius: 99px;
+  opacity: 1 !important;
 }
 .nav-logo {
   font-family: var(--font-display);

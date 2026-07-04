@@ -37,9 +37,7 @@ export default function Nav() {
     <>
       <motion.nav
         className="nav glass"
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        initial={{ opacity: 1, y: 0 }}
       >
         <a className="nav-logo" href="#top" onClick={(e) => go(e, 'body')}>
           <span className="mark">S</span>
