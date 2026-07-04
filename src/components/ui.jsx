@@ -7,15 +7,26 @@ import {
   useReducedMotion,
 } from 'framer-motion'
 
-/* ---------- Reveal: fade + rise when scrolled into view ---------- */
-export function Reveal({ children, delay = 0, y = 28, className, as = 'div' }) {
+/* Direction map for different entrance animations */
+const directionMap = {
+  up:    { y: 32, x: 0, scale: 1 },
+  down:  { y: -32, x: 0, scale: 1 },
+  left:  { x: -40, y: 0, scale: 1 },
+  right: { x: 40, y: 0, scale: 1 },
+  scale: { scale: 0.85, y: 0, x: 0 },
+  none:  { y: 0, x: 0, scale: 1 },
+}
+
+/* ---------- Reveal: configurable direction ---------- */
+export function Reveal({ children, delay = 0, y = 28, dir, className, as = 'div' }) {
   const reduce = useReducedMotion()
   const MotionTag = motion[as] || motion.div
+  const d = directionMap[dir] || { y: y || 28, x: 0, scale: 1 }
   return (
     <MotionTag
       className={className}
-      initial={reduce ? { opacity: 0 } : { opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={reduce ? { opacity: 0 } : { opacity: 0, y: d.y, x: d.x, scale: d.scale }}
+      whileInView={{ opacity: 1, y: 0, x: 0, scale: 1 }}
       viewport={{ once: false, margin: '-80px' }}
       transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
     >
@@ -24,7 +35,7 @@ export function Reveal({ children, delay = 0, y = 28, className, as = 'div' }) {
   )
 }
 
-/* ---------- Stagger container + item ---------- */
+/* ---------- Stagger container + item (with direction support) ---------- */
 export function Stagger({ children, className, gap = 0.08 }) {
   return (
     <motion.div
@@ -42,16 +53,20 @@ export function Stagger({ children, className, gap = 0.08 }) {
   )
 }
 
-export function StaggerItem({ children, className, y = 24 }) {
+export function StaggerItem({ children, className, y = 24, x = 0, scale = 1 }) {
   const reduce = useReducedMotion()
   return (
     <motion.div
       className={className}
       variants={{
-        hidden: reduce ? { opacity: 0 } : { opacity: 0, y },
+        hidden: reduce
+          ? { opacity: 0 }
+          : { opacity: 0, y, x, scale },
         show: {
           opacity: 1,
           y: 0,
+          x: 0,
+          scale: 1,
           transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
         },
       }}
@@ -129,18 +144,20 @@ export function Counter({ to = 0, suffix = '', duration = 1600 }) {
 }
 
 /* ---------- Section heading ---------- */
-export function SectionHeading({ index, title, blurb }) {
+export function SectionHeading({ index, title, blurb, dir }) {
   return (
     <div className="sec-head">
-      <Reveal>
+      <Reveal dir={dir || 'up'}>
         <span className="index">{index}</span>
         <h2 dangerouslySetInnerHTML={{ __html: title }} />
       </Reveal>
       {blurb && (
-        <Reveal delay={0.1}>
+        <Reveal delay={0.1} dir={dir || 'up'}>
           <p>{blurb}</p>
         </Reveal>
       )}
     </div>
   )
 }
+
+export { directionMap }

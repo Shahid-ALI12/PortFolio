@@ -34,6 +34,10 @@ function ProjectCard({ p, i }) {
     ry.set(0)
   }
 
+  // Alternate: even cards from left, odd from right
+  const isEven = i % 2 === 0
+  const xStart = isEven ? -60 : 60
+
   return (
     <motion.a
       ref={ref}
@@ -42,10 +46,10 @@ function ProjectCard({ p, i }) {
       style={{ '--pc': p.color, rotateX: srx, rotateY: sry }}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={reduce ? { opacity: 0 } : { opacity: 0, x: xStart, y: 30 }}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: false, margin: '-80px' }}
-      transition={{ duration: 0.7, delay: (i % 2) * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
     >
       <span className="project-glow" />
       <div className="project-top">
@@ -77,6 +81,7 @@ export default function Projects() {
           index="// 02 — Selected work"
           title="Things I&apos;ve <span class='gradient-text'>built</span>"
           blurb="A few projects I'm proud of. Swap these with your own in src/data.js."
+          dir="right"
         />
         <div className="projects-grid">
           {projects.map((p, i) => (

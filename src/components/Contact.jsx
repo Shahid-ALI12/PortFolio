@@ -1,4 +1,4 @@
-import { Github, Linkedin, Twitter, Mail, ArrowUpRight, Send } from 'lucide-react'
+import { Github, Linkedin, Twitter, Mail, ArrowUpRight } from 'lucide-react'
 import { profile, socials } from '../data'
 import { Reveal, Magnetic } from './ui'
 
@@ -8,14 +8,14 @@ export default function Contact() {
   return (
     <section className="section contact" id="contact">
       <div className="container">
-        <Reveal>
+        <Reveal dir="up">
           <span className="eyebrow" style={{ justifyContent: 'center', display: 'flex' }}>
             <span className="dot" />
             {profile.location}
           </span>
         </Reveal>
 
-        <Reveal delay={0.05}>
+        <Reveal delay={0.05} dir="scale">
           <h2 style={{ marginTop: 24 }}>
             Let&apos;s build
             <br />
@@ -23,7 +23,7 @@ export default function Contact() {
           </h2>
         </Reveal>
 
-        <Reveal delay={0.1}>
+        <Reveal delay={0.1} dir="up">
           <Magnetic strength={0.25}>
             <a className="mailto glass" href={`mailto:${profile.email}`}>
               <Mail size={22} />
@@ -33,9 +33,9 @@ export default function Contact() {
           </Magnetic>
         </Reveal>
 
-        <Reveal delay={0.15}>
+        <Reveal delay={0.15} dir="up">
           <div className="socials">
-            {socials.map((s) => {
+            {socials.map((s, i) => {
               const Icon = ICONS[s.icon] || Mail
               return (
                 <Magnetic key={s.label} strength={0.5}>

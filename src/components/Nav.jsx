@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { navItems, profile } from '../data'
 import { scrollToId } from '../hooks/useLenis'
@@ -9,7 +9,6 @@ export default function Nav() {
   const [active, setActive] = useState('#about')
   const [open, setOpen] = useState(false)
 
-  // Scroll-spy: highlight the section currently in view.
   useEffect(() => {
     const ids = navItems.map((n) => n.href)
     const observer = new IntersectionObserver(
@@ -35,10 +34,7 @@ export default function Nav() {
 
   return (
     <>
-      <motion.nav
-        className="nav glass"
-        initial={{ opacity: 1, y: 0 }}
-      >
+      <nav className="nav glass">
         <a className="nav-logo" href="#top" onClick={(e) => go(e, 'body')}>
           <span className="mark">S</span>
           {profile.name}
@@ -70,7 +66,7 @@ export default function Nav() {
         >
           <Menu size={20} />
         </button>
-      </motion.nav>
+      </nav>
 
       <AnimatePresence>
         {open && (
