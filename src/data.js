@@ -3,29 +3,29 @@
 // ----------------------------------------------------------------
 
 export const profile = {
-  name: 'Zubair',
+  name: 'Shahid Ali',
   roles: [
     'Full-Stack Developer',
     'React & Node.js Engineer',
     'UI-obsessed Builder',
     'Problem Solver',
   ],
-  email: 'dev.mzain@gmail.com',
-  location: 'Available worldwide · Remote',
+  email: 'shahidshafaqat2007@gmail.com',
+  location: 'Pakistan · Remote Available',
   resumeUrl: '#',
 }
 
 export const socials = [
-  { label: 'GitHub', href: 'https://github.com/', icon: 'Github' },
+  { label: 'GitHub', href: 'https://github.com/Shahid-ALI12', icon: 'Github' },
   { label: 'LinkedIn', href: 'https://linkedin.com/', icon: 'Linkedin' },
   { label: 'X / Twitter', href: 'https://x.com/', icon: 'Twitter' },
-  { label: 'Email', href: 'mailto:dev.mzain@gmail.com', icon: 'Mail' },
+  { label: 'Email', href: 'mailto:shahidshafaqat2007@gmail.com', icon: 'Mail' },
 ]
 
 export const heroStats = [
   { k: '5+', v: 'Years building' },
   { k: '40+', v: 'Projects shipped' },
-  { k: '∞', v: 'Cups of coffee' },
+  { k: '∞', v: 'Cups of chai' },
 ]
 
 export const highlights = [
@@ -74,9 +74,9 @@ export const marquee = [
 export const projects = [
   {
     num: '01',
-    title: 'Nebula Analytics',
-    desc: 'Real-time SaaS analytics dashboard with live charts, custom queries and sub-second WebSocket updates.',
-    tags: ['Next.js', 'TypeScript', 'WebSocket', 'D3'],
+    title: 'Portfolio Website',
+    desc: 'A stunning dark-themed developer portfolio with 3D animations, aurora backgrounds, and smooth scroll transitions.',
+    tags: ['React', 'Three.js', 'Framer Motion', 'Lenis'],
     color: '#22d3ee',
     href: '#',
   },

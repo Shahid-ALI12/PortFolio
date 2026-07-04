@@ -1,9 +1,9 @@
 {
-  "name": "zubair-portfolio",
+  "name": "shahid-ali-portfolio",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Zubair — Full-Stack Developer portfolio. Dark neon / aurora theme with advanced animations.",
+  "description": "Shahid Ali — Full-Stack Developer portfolio. Dark neon / aurora theme with advanced animations.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

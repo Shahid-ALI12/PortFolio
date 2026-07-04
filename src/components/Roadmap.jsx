@@ -13,7 +13,7 @@ import { SectionHeading, Reveal } from './ui'
 function Milestone({ item, index, total }) {
   const reduce = useReducedMotion()
   const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-60px' })
+  const inView = useInView(ref, { once: false, margin: '-60px' })
   const isLeft = index % 2 === 0
 
   const xStart = isLeft ? -60 : 60
@@ -68,7 +68,7 @@ function Milestone({ item, index, total }) {
 /* ---- Year block with its milestones ---- */
 function YearBlock({ year, milestones, yearIndex }) {
   const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-40px' })
+  const inView = useInView(ref, { once: false, margin: '-40px' })
   const reduce = useReducedMotion()
 
   return (

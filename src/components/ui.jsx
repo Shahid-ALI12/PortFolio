@@ -16,7 +16,7 @@ export function Reveal({ children, delay = 0, y = 28, className, as = 'div' }) {
       className={className}
       initial={reduce ? { opacity: 0 } : { opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
+      viewport={{ once: false, margin: '-80px' }}
       transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
@@ -31,7 +31,7 @@ export function Stagger({ children, className, gap = 0.08 }) {
       className={className}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: '-60px' }}
+      viewport={{ once: false, margin: '-60px' }}
       variants={{
         hidden: {},
         show: { transition: { staggerChildren: gap } },
@@ -98,7 +98,7 @@ export function Magnetic({ children, strength = 0.35, className }) {
 /* ---------- Count-up number when in view ---------- */
 export function Counter({ to = 0, suffix = '', duration = 1600 }) {
   const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-60px' })
+  const inView = useInView(ref, { once: false, margin: '-60px' })
   const reduce = useReducedMotion()
   const [val, setVal] = useState(0)
 

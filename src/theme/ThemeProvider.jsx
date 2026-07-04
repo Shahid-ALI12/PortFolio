@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 /* Palette (color) axis — mirrors the [data-theme] blocks in index.css */
 export const THEMES = [
   { id: 'neon', label: 'Dark Neon' },
+  { id: 'light', label: 'Light' },
   { id: 'aurora', label: 'Aurora' },
   { id: 'cyber', label: 'Cyber HUD' },
   { id: 'glass', label: 'Glassmorphism' },
@@ -20,6 +21,7 @@ export const DESIGNS = [
    and by the switcher swatches. Keep in sync with index.css [data-theme] blocks. */
 export const PALETTE = {
   neon: ['#22d3ee', '#a855f7', '#ec4899'],
+  light: ['#0ea5e9', '#8b5cf6', '#ec4899'],
   aurora: ['#6ee7ff', '#8b7bff', '#ff8ad1'],
   cyber: ['#00ffd0', '#00b3ff', '#ff2e88'],
   glass: ['#a0c4ff', '#bdb2ff', '#ffc6ff'],
@@ -30,9 +32,9 @@ export const swatchGradient = (id) => {
   return `linear-gradient(120deg, ${a}, ${b} 50%, ${c})`
 }
 
-const K_THEME = 'zubair.theme'
-const K_DESIGN = 'zubair.design'
-const K_3D = 'zubair.threeD'
+const K_THEME = 'shahid.theme'
+const K_DESIGN = 'shahid.design'
+const K_3D = 'shahid.threeD'
 
 const read = (k, f) => {
   try {

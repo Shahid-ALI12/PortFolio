@@ -1,5 +1,5 @@
 /* ============================================================
-   ZUBAIR — Portfolio
+   SHAHID ALI — Portfolio
    Dark · Neon · Aurora  |  Design tokens + base + components
    ============================================================ */
 
@@ -60,6 +60,25 @@
 /* ============================================================
    Palette themes  (color axis — [data-theme])   neon = :root default
    ============================================================ */
+/* --- Themes with light option --- */
+[data-theme='neon'] {
+  /* default dark neon - already set in :root */
+}
+[data-theme='light'] {
+  --bg: #f8f9fc;
+  --bg-soft: #eef0f6;
+  --surface: rgba(0, 0, 0, 0.04);
+  --surface-2: rgba(0, 0, 0, 0.07);
+  --stroke: rgba(0, 0, 0, 0.1);
+  --stroke-strong: rgba(0, 0, 0, 0.18);
+  --text: #1a1c2e;
+  --text-muted: #6b7094;
+  --text-faint: #a0a5c0;
+  --accent: #0ea5e9;
+  --accent-2: #8b5cf6;
+  --accent-3: #ec4899;
+  --teal: #14b8a6;
+}
 [data-theme='aurora'] {
   --bg: #0b1020;
   --bg-soft: #111a33;
@@ -244,6 +263,10 @@ main {
   border: var(--stroke-w) solid var(--stroke);
   backdrop-filter: blur(var(--blur));
   -webkit-backdrop-filter: blur(var(--blur));
+  transition: border-color 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out), transform 0.35s var(--ease-out);
+}
+.glass:hover {
+  border-color: var(--stroke-strong);
 }
 
 /* ---------- Buttons ---------- */
@@ -259,6 +282,21 @@ main {
   letter-spacing: 0.01em;
   transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
   will-change: transform;
+  overflow: hidden;
+}
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.5s var(--ease-out);
+}
+.btn:hover::after {
+  transform: translateX(100%);
+}
+.btn:hover {
+  transform: translateY(-2px);
 }
 .btn svg {
   width: 18px;
@@ -977,12 +1015,16 @@ main {
 /* ============================================================
    Responsive
    ============================================================ */
-@media (max-width: 980px) {
+@media (max-width: 1080px) {
   .about-grid { grid-template-columns: 1fr; gap: 32px; }
   .skills-grid { grid-template-columns: repeat(2, 1fr); }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .sec-head { flex-direction: column; align-items: flex-start; }
+  .sec-head p { max-width: 100%; }
+  .hero-3d { width: min(40vw, 450px); height: min(40vw, 450px); right: -6%; opacity: 0.6; }
 }
-@media (max-width: 760px) {
+
+@media (max-width: 768px) {
   .nav-links { display: none; }
   .nav-cta { display: none; }
   .nav-burger {
@@ -996,11 +1038,47 @@ main {
   }
   .projects-grid { grid-template-columns: 1fr; }
   .hero-meta { gap: 24px; }
+  .hero { padding-top: 100px; padding-bottom: 60px; }
+  .hero-actions { gap: 12px; }
+  .btn { padding: 13px 22px; font-size: 0.9rem; }
+  .contact h2 { font-size: clamp(2rem, 8vw, 4rem); }
+  .contact .mailto { padding: 14px 24px; font-size: clamp(0.95rem, 2.5vw, 1.2rem); }
   .cursor-dot, .cursor-ring { display: none; }
+  .section { padding-block: clamp(60px, 10vw, 120px); }
+  .hero-3d { display: none; }
+  .scroll-cue { bottom: 20px; }
+  .about-card { padding: 22px; }
+  .project-card { padding: 26px; min-height: 280px; }
+  .roadmap-card { padding: 20px 22px; }
+  .stat { padding: 28px 12px; }
+  .socials { gap: 10px; }
+  .social-btn { width: 46px; height: 46px; }
+  .switcher { right: 16px; bottom: 16px; }
+  .switcher-fab { width: 48px; height: 48px; }
 }
+
 @media (max-width: 480px) {
   .skills-grid { grid-template-columns: 1fr; }
   .stats-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: clamp(2.2rem, 10vw, 3.5rem); }
+  .hero-sub { font-size: 0.95rem; margin-top: 20px; }
+  .hero-actions { flex-direction: column; align-items: flex-start; width: 100%; }
+  .hero-actions .btn { width: 100%; justify-content: center; }
+  .hero-meta { flex-direction: column; gap: 16px; margin-top: 40px; }
+  .hero-meta .item .k { font-size: 1.5rem; }
+  .nav { width: calc(100% - 24px); padding: 8px 10px 8px 16px; top: 12px; }
+  .nav-logo .mark { width: 26px; height: 26px; font-size: 0.85rem; }
+  .nav-logo { font-size: 1rem; }
+  .mobile-menu a { font-size: 1.5rem; }
+  .footer-inner { flex-direction: column; text-align: center; gap: 16px; }
+  .project-card { min-height: 240px; padding: 22px; }
+  .project-body h3 { font-size: 1.3rem; }
+  .skill-card { padding: 20px; }
+  .about-lead { font-size: clamp(1.2rem, 5vw, 1.5rem); }
+  .sec-head h2 { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+  .sec-head .index { font-size: 0.75rem; }
+  .chip { font-size: 0.68rem; padding: 4px 9px; }
+  .switcher-panel { width: 220px; right: -4px; bottom: 60px; }
 }
 
 /* ---------- Reduced motion ---------- */

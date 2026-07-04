@@ -42,7 +42,7 @@ export default function Nav() {
         transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
       >
         <a className="nav-logo" href="#top" onClick={(e) => go(e, 'body')}>
-          <span className="mark">Z</span>
+          <span className="mark">S</span>
           {profile.name}
         </a>
 

@@ -1,4 +1,4 @@
-import { Github, Linkedin, Twitter, Mail, ArrowUpRight } from 'lucide-react'
+import { Github, Linkedin, Twitter, Mail, ArrowUpRight, Send } from 'lucide-react'
 import { profile, socials } from '../data'
 import { Reveal, Magnetic } from './ui'
 
