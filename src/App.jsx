@@ -14,6 +14,7 @@ import Marquee from './components/Marquee'
 import Skills from './components/Skills'
 import Projects from './components/Projects'
 import Stats from './components/Stats'
+import Roadmap from './components/Roadmap'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 
@@ -51,6 +52,7 @@ export default function App() {
         <Marquee />
         <Skills />
         <Projects />
+        <Roadmap />
         <Stats />
         <Contact />
       </main>

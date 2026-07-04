@@ -113,9 +113,65 @@ export const stats = [
   { num: 99, suffix: '%', label: 'On-time delivery' },
 ]
 
+export const roadmap = [
+  {
+    year: '2024',
+    milestones: [
+      {
+        title: 'Started Web Development',
+        desc: 'Began the journey with HTML, CSS & JavaScript. Built first responsive websites and learned core frontend fundamentals.',
+        badge: 'Kickoff',
+        badgeColor: 'var(--accent)',
+        tags: ['HTML', 'CSS', 'JavaScript'],
+      },
+      {
+        title: 'React & Modern Frameworks',
+        desc: 'Dove deep into React ecosystem — hooks, context, state management. Built SPAs and explored Next.js for production apps.',
+        badge: 'Growth',
+        badgeColor: 'var(--accent-2)',
+        tags: ['React', 'Next.js', 'Redux'],
+      },
+      {
+        title: 'Backend & Databases',
+        desc: 'Learned Node.js, Express, and database design with MongoDB & PostgreSQL. Built full-stack applications end to end.',
+        badge: 'Full-Stack',
+        badgeColor: 'var(--accent-3)',
+        tags: ['Node.js', 'MongoDB', 'PostgreSQL'],
+      },
+    ],
+  },
+  {
+    year: '2025',
+    milestones: [
+      {
+        title: 'Advanced UI & Animations',
+        desc: 'Mastered Framer Motion, Three.js, and WebGL for immersive user interfaces. Focused on micro-interactions and pixel-perfect design.',
+        badge: 'Design',
+        badgeColor: 'var(--accent)',
+        tags: ['Framer Motion', 'Three.js', 'WebGL'],
+      },
+      {
+        title: 'DevOps & Cloud',
+        desc: 'Containerized apps with Docker, deployed on AWS & Vercel. Set up CI/CD pipelines and automated workflows.',
+        badge: 'DevOps',
+        badgeColor: 'var(--accent-2)',
+        tags: ['Docker', 'AWS', 'CI/CD'],
+      },
+      {
+        title: 'Open Source & Community',
+        desc: 'Contributed to open-source projects, built developer tools, and started sharing knowledge through technical writing and mentoring.',
+        badge: 'Impact',
+        badgeColor: 'var(--accent-3)',
+        tags: ['Open Source', 'Mentoring', 'Writing'],
+      },
+    ],
+  },
+]
+
 export const navItems = [
   { label: 'About', href: '#about' },
   { label: 'Skills', href: '#skills' },
   { label: 'Work', href: '#work' },
+  { label: 'Roadmap', href: '#roadmap' },
   { label: 'Contact', href: '#contact' },
 ]
