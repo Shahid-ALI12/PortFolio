@@ -44,7 +44,12 @@ export default function App() {
       {/* Top scroll-progress bar */}
       <motion.div className="scroll-progress" style={{ scaleX: scrollYProgress }} />
 
-      <Nav />
+      {/* Nav hides during loader, appears after */}
+      <AnimatePresence>
+        {!loading && (
+          <Nav />
+        )}
+      </AnimatePresence>
 
       <main>
         <Hero />
