@@ -1,14 +1,20 @@
-import { useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import {
   motion,
   useScroll,
   useTransform,
   useReducedMotion,
+  useInView,
 } from 'framer-motion'
 import { ArrowDownRight, ArrowUpRight } from 'lucide-react'
 import { profile, heroStats } from '../data'
 import { scrollToId } from '../hooks/useLenis'
 import { Magnetic } from './ui'
+import { useTheme } from '../theme/ThemeProvider'
+import SafeBoundary from './SafeBoundary'
+
+// Heavy (three.js) — code-split so it never blocks first paint.
+const Scene3D = lazy(() => import('../three/Scene3D'))
 
 /* Headline split into lines → words for the masked rise reveal. */
 const LINES = [
@@ -48,6 +54,9 @@ export default function Hero() {
   const ref = useRef(null)
   const reduce = useReducedMotion()
   const role = useTypewriter(profile.roles)
+  const { colors, enable3D } = useTheme()
+  const inView = useInView(ref, { margin: '-20% 0px -20% 0px' })
+  const show3D = enable3D && !reduce
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -128,12 +137,15 @@ export default function Hero() {
         </motion.div>
       </motion.div>
 
-      <div className="hero-image" aria-hidden="true">
-        <div className="hero-img-frame">
-          <img src="/hero-person.jpeg" alt="Shahid Ali" className="hero-img" />
-          <div className="hero-img-glow" />
+      {show3D && (
+        <div className="hero-3d" aria-hidden="true">
+          <SafeBoundary>
+            <Suspense fallback={null}>
+              <Scene3D colors={colors} active={inView} />
+            </Suspense>
+          </SafeBoundary>
         </div>
-      </div>
+      )}
 
       <motion.div
         className="scroll-cue"
