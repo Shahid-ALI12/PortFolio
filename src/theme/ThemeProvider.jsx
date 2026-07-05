@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 
 /* Palette (color) axis — mirrors the [data-theme] blocks in index.css */
 export const THEMES = [
+  { id: 'black', label: 'Black' },
   { id: 'neon', label: 'Dark Neon' },
   { id: 'light', label: 'Light' },
   { id: 'aurora', label: 'Aurora' },
@@ -20,6 +21,7 @@ export const DESIGNS = [
 /* Accent color trios per palette — consumed by the WebGL layers (Scene3D + shader bg)
    and by the switcher swatches. Keep in sync with index.css [data-theme] blocks. */
 export const PALETTE = {
+  black: ['#0891b1', '#7c3aed', '#db2777'],
   neon: ['#22d3ee', '#a855f7', '#ec4899'],
   light: ['#0ea5e9', '#8b5cf6', '#ec4899'],
   aurora: ['#6ee7ff', '#8b7bff', '#ff8ad1'],
@@ -49,7 +51,7 @@ const ThemeContext = createContext(null)
 export function ThemeProvider({ children }) {
   const el = typeof document !== 'undefined' ? document.documentElement : null
 
-  const [theme, setTheme] = useState(() => (el && el.getAttribute('data-theme')) || read(K_THEME, 'neon'))
+  const [theme, setTheme] = useState(() => (el && el.getAttribute('data-theme')) || read(K_THEME, 'black'))
   const [design, setDesign] = useState(() => (el && el.getAttribute('data-design')) || read(K_DESIGN, 'soft'))
   const [enable3D, setEnable3D] = useState(() => {
     // default on, but off if the user stored a preference or prefers reduced motion
@@ -95,7 +97,7 @@ export function ThemeProvider({ children }) {
   }, [enable3D])
 
   const value = useMemo(
-    () => ({ theme, setTheme, design, setDesign, enable3D, setEnable3D, colors: PALETTE[theme] || PALETTE.neon }),
+    () => ({ theme, setTheme, design, setDesign, enable3D, setEnable3D, colors: PALETTE[theme] || PALETTE.black }),
     [theme, design, enable3D],
   )
 
