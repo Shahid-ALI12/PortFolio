@@ -160,4 +160,4 @@ export function SectionHeading({ index, title, blurb, dir }) {
   )
 }
 
-export { directionMap }
+

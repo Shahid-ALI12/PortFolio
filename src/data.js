@@ -12,12 +12,12 @@ export const profile = {
   ],
   email: 'shahidshafaqat2007@gmail.com',
   location: 'Pakistan · Remote Available',
-  resumeUrl: '#',
+  resumeUrl: '',
 }
 
 export const socials = [
   { label: 'GitHub', href: 'https://github.com/Shahid-ALI12', icon: 'Github' },
-  { label: 'LinkedIn', href: 'https://linkedin.com/', icon: 'Linkedin' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/shahid-ali-', icon: 'Linkedin' },
   { label: 'X / Twitter', href: 'https://x.com/', icon: 'Twitter' },
   { label: 'Email', href: 'mailto:shahidshafaqat2007@gmail.com', icon: 'Mail' },
 ]
@@ -78,7 +78,7 @@ export const projects = [
     desc: 'A stunning dark-themed developer portfolio with 3D animations, aurora backgrounds, and smooth scroll transitions.',
     tags: ['React', 'Three.js', 'Framer Motion', 'Lenis'],
     color: '#22d3ee',
-    href: '#',
+    href: 'https://github.com/Shahid-ALI12',
   },
   {
     num: '02',
@@ -86,7 +86,7 @@ export const projects = [
     desc: 'Headless e-commerce platform with a blazing storefront, Stripe checkout and an admin CMS.',
     tags: ['React', 'Node.js', 'Stripe', 'PostgreSQL'],
     color: '#a855f7',
-    href: '#',
+    href: 'https://github.com/Shahid-ALI12',
   },
   {
     num: '03',
@@ -94,7 +94,7 @@ export const projects = [
     desc: 'AI-powered realtime chat with streaming responses, presence and end-to-end optimistic UI.',
     tags: ['React', 'Socket.io', 'OpenAI', 'Redis'],
     color: '#ec4899',
-    href: '#',
+    href: 'https://github.com/Shahid-ALI12',
   },
   {
     num: '04',
@@ -102,7 +102,7 @@ export const projects = [
     desc: 'Collaborative project management with drag-and-drop boards, realtime sync and granular roles.',
     tags: ['Next.js', 'Prisma', 'tRPC', 'Tailwind'],
     color: '#2dd4bf',
-    href: '#',
+    href: 'https://github.com/Shahid-ALI12',
   },
 ]
 

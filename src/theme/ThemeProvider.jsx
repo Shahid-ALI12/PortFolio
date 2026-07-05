@@ -73,7 +73,7 @@ export function ThemeProvider({ children }) {
     }
     // keep mobile browser chrome in sync with the palette
     const meta = document.querySelector('meta[name="theme-color"]')
-    if (meta) meta.setAttribute('content', getComputedStyle(el).getPropertyValue('--bg').trim() || '#06070d')
+    if (meta) meta.setAttribute('content', getComputedStyle(el).getPropertyValue('--bg').trim() || '#030409')
   }, [theme, el])
 
   useEffect(() => {

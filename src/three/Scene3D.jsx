@@ -82,7 +82,6 @@ function Rig({ colors }) {
   const knotMat = useRef(null)
   const wireMat = useRef(null)
   const invalidate = useThree((s) => s.invalidate)
-  const orbitColor = useMemo(() => new THREE.Color(colors[2]), [])
 
   useEffect(() => {
     const [a, b] = colors

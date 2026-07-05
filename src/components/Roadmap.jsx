@@ -66,7 +66,7 @@ function Milestone({ item, index, total }) {
 }
 
 /* ---- Year block with its milestones ---- */
-function YearBlock({ year, milestones, yearIndex }) {
+function YearBlock({ year, milestones }) {
   const ref = useRef(null)
   const inView = useInView(ref, { once: false, margin: '-40px' })
   const reduce = useReducedMotion()
@@ -137,7 +137,6 @@ export default function Roadmap() {
             key={block.year}
             year={block.year}
             milestones={block.milestones}
-            yearIndex={i}
           />
         ))}
       </div>

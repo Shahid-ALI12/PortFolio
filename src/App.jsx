@@ -51,7 +51,7 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <main>
+      <main aria-hidden={loading || undefined}>
         <Hero />
         <About />
         <Marquee />
@@ -62,7 +62,7 @@ export default function App() {
         <Contact />
       </main>
 
-      <Footer />
+      <Footer aria-hidden={loading || undefined} />
       <ThemeSwitcher />
     </>
   )

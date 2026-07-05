@@ -4,7 +4,7 @@ import { SectionHeading, Stagger, StaggerItem } from './ui'
 
 const ICONS = { Layout, Server, Database, Cpu }
 
-const dirs = ['left', 'right', 'left', 'right', 'scale']
+const dirs = ['left', 'right', 'left', 'right']
 
 export default function Skills() {
   return (

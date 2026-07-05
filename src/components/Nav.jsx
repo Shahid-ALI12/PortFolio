@@ -35,7 +35,7 @@ export default function Nav() {
   return (
     <>
       <nav className="nav glass">
-        <a className="nav-logo" href="#top" onClick={(e) => go(e, 'body')}>
+        <a className="nav-logo" href="#top" onClick={(e) => go(e, '#top')}>
           <span className="mark">S</span>
           {profile.name}
         </a>
